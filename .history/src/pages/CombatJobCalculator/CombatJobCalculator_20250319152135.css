@@ -1,0 +1,116 @@
+.combat-job-calculator {
+    text-align: center;
+    margin-bottom: 40px; /* フッターとの隙間 */
+}
+
+.combat-job-calculator h2 {
+    margin-bottom: 20px;
+    font-size: 1.8rem;
+}
+
+.combat-job-calculator .form-section {
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.combat-job-calculator .form-section h3 {
+    font-size: 1.5rem;
+    margin-bottom: 15px;
+}
+
+.combat-job-calculator input,
+.combat-job-calculator select,
+.combat-job-calculator button {
+    width: 80%;
+    padding: 10px;
+    margin: 8px 0;
+    border: 1px solid #444;
+    border-radius: 5px;
+    font-size: 1rem;
+    max-width: 500px;
+}
+
+.combat-job-calculator button {
+    background-color: #007bff;
+    color: #fff;
+    cursor: pointer;
+    transition: background 0.3s ease;
+    font-weight: bold;
+    margin-top: 15px;
+}
+
+.combat-job-calculator button:hover {
+    background-color: #0056b3;
+}
+
+.combat-job-calculator .result {
+    margin-top: 20px;
+    background-color: #2e2e2e;
+    padding: 15px;
+    border-radius: 5px;
+    font-size: 1.1rem;
+    text-align: left;
+    width: 80%;
+    max-width: 500px;
+    line-height: 1.6;
+}
+
+/* レスポンシブ対応 */
+@media (max-width: 768px) {
+    .combat-job-calculator h2 {
+        font-size: 1.6rem;
+    }
+    
+    .combat-job-calculator .form-section h3 {
+        font-size: 1.3rem;
+    }
+    
+    .combat-job-calculator input,
+    .combat-job-calculator select,
+    .combat-job-calculator button {
+        width: 90%;
+        font-size: 0.9rem;
+    }
+    
+    .combat-job-calculator .result {
+        width: 90%;
+        font-size: 1rem;
+        padding: 12px;
+    }
+}
+
+@media (max-width: 480px) {
+    .combat-job-calculator h2 {
+        font-size: 1.4rem;
+    }
+    
+    .combat-job-calculator .form-section h3 {
+        font-size: 1.2rem;
+    }
+    
+    .combat-job-calculator input,
+    .combat-job-calculator select,
+    .combat-job-calculator button {
+        width: 95%;
+        font-size: 0.85rem;
+        padding: 8px;
+    }
+    
+    .combat-job-calculator .result {
+        width: 95%;
+        font-size: 0.9rem;
+        padding: 10px;
+    }
+}
+
+/* 横向き（landscape）のタブレット */
+@media (max-width: 1024px) and (orientation: landscape) {
+    .combat-job-calculator input,
+    .combat-job-calculator select,
+    .combat-job-calculator button {
+        padding: 8px;
+        margin: 5px 0;
+    }
+}

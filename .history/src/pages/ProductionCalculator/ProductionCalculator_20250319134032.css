@@ -1,0 +1,141 @@
+.production-calculator {
+    text-align: center;
+    margin-bottom: 40px; /* フッターとの隙間 */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.production-calculator h2 {
+    margin-bottom: 20px;
+    font-size: 1.8rem;
+}
+
+.production-calculator label {
+    display: block;
+    margin: 10px 0 5px;
+    font-size: 1rem;
+    text-align: left;
+    width: 80%;
+    max-width: 500px;
+}
+
+.production-calculator input,
+.production-calculator select,
+.production-calculator button {
+    width: 80%;
+    padding: 10px;
+    margin: 5px 0;
+    border: 1px solid #444;
+    border-radius: 5px;
+    font-size: 1rem;
+    max-width: 500px;
+}
+
+.production-calculator button {
+    background-color: #007bff;
+    color: #fff;
+    cursor: pointer;
+    transition: background 0.3s ease;
+    font-weight: bold;
+    margin-top: 15px;
+}
+
+.production-calculator button:hover {
+    background-color: #0056b3;
+}
+
+/* 結果表示部分のスタイル調整 */
+.production-calculator .result {
+    margin-top: 20px;
+    background-color: #2e2e2e;
+    padding: 15px;
+    border-radius: 5px;
+    font-size: 1.1rem;
+    text-align: left;
+    line-height: 1.6;
+    width: 80%;
+    max-width: 500px;
+}
+
+.production-calculator .result h4 {
+    margin-top: 0;
+    margin-bottom: 10px;
+    font-size: 1.3rem;
+}
+
+.production-calculator .result p {
+    margin: 8px 0;
+}
+
+/* レスポンシブ対応 */
+@media (max-width: 768px) {
+    .production-calculator h2 {
+        font-size: 1.6rem;
+    }
+    
+    .production-calculator label {
+        width: 90%;
+        font-size: 0.9rem;
+    }
+    
+    .production-calculator input,
+    .production-calculator select,
+    .production-calculator button {
+        width: 90%;
+        font-size: 0.9rem;
+    }
+    
+    .production-calculator .result {
+        width: 90%;
+        font-size: 1rem;
+        padding: 12px;
+    }
+    
+    .production-calculator .result h4 {
+        font-size: 1.2rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .production-calculator h2 {
+        font-size: 1.4rem;
+    }
+    
+    .production-calculator label {
+        width: 95%;
+        font-size: 0.85rem;
+    }
+    
+    .production-calculator input,
+    .production-calculator select,
+    .production-calculator button {
+        width: 95%;
+        font-size: 0.85rem;
+        padding: 8px;
+    }
+    
+    .production-calculator .result {
+        width: 95%;
+        font-size: 0.9rem;
+        padding: 10px;
+    }
+    
+    .production-calculator .result h4 {
+        font-size: 1.1rem;
+    }
+}
+
+/* 横向き（landscape）のタブレット */
+@media (max-width: 1024px) and (orientation: landscape) {
+    .production-calculator input,
+    .production-calculator select,
+    .production-calculator button {
+        padding: 8px;
+        margin: 5px 0;
+    }
+    
+    .production-calculator label {
+        margin: 5px 0 2px;
+    }
+}

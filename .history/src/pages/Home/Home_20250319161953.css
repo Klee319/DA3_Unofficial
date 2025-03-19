@@ -84,6 +84,7 @@
     text-align: left;
     display: flex;
     flex-direction: column;
+    position: relative;
 }
 
 .card:hover {
@@ -118,7 +119,9 @@
     font-weight: bold;
     transition: background-color 0.3s ease;
     align-self: flex-start; /* 左揃え */
-    margin-top: auto; /* 上部の余白を小さく */
+    margin-top: 10px; /* 上部の余白を小さく */
+    position: absolute;
+    bottom: 7%;
 }
 
 .card-link:hover {

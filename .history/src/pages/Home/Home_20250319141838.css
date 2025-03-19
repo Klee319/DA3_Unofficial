@@ -1,0 +1,69 @@
+.home {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+    padding: 0;
+    margin: 0;
+    overflow: hidden;
+}
+
+.banner {
+    width: 100%;
+    height: auto;
+    max-height: 70vh; /* ビューポートの70%を最大高さに設定 */
+    object-fit: contain; /* 画像が見切れないように変更 */
+    margin: 0;
+    padding: 0;
+    display: block;
+}
+
+.home-title {
+    width: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+    padding: 20px 0;
+    margin-top: 20px;
+}
+
+.home-title h1 {
+    font-size: 2.5rem;
+    margin: 0;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+/* レスポンシブ対応 */
+@media (max-width: 768px) {
+    .banner {
+        max-height: 60vh;
+    }
+    
+    .home-title {
+        padding: 15px 0;
+    }
+    
+    .home-title h1 {
+        font-size: 2rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .banner {
+        max-height: 50vh;
+    }
+    
+    .home-title {
+        padding: 10px 0;
+    }
+    
+    .home-title h1 {
+        font-size: 1.5rem;
+    }
+}
+
+/* 横向き（landscape）のタブレット */
+@media (max-width: 1024px) and (orientation: landscape) {
+    .banner {
+        max-height: 60vh;
+    }
+}

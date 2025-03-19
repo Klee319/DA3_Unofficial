@@ -1,0 +1,56 @@
+/* グローバルスタイル */
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+    background-color: #121212;
+    color: #f0f0f0;
+    overflow-x: hidden; /* 横スクロール防止 */
+    box-sizing: border-box;
+}
+
+*, *:before, *:after {
+    box-sizing: inherit;
+}
+
+.app {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    padding-bottom: 80px; /* フッターの高さ分の余白 */
+}
+
+/* 共通コンテナ */
+.container {
+    padding: 20px;
+    width: 100%;
+    max-width: 100%;
+}
+
+/* レスポンシブフォントサイズ */
+@media (max-width: 768px) {
+    html {
+        font-size: 14px;
+    }
+}
+
+@media (max-width: 480px) {
+    html {
+        font-size: 12px;
+    }
+}
+
+/* 横向き（landscape）のタブレット */
+@media (max-width: 1024px) and (orientation: landscape) {
+    .container {
+        padding: 15px;
+    }
+}
+
+/* 縦向き（portrait）のタブレット */
+@media (max-width: 768px) and (orientation: portrait) {
+    .container {
+        padding: 10px;
+    }
+}

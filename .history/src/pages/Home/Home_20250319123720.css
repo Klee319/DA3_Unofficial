@@ -1,0 +1,14 @@
+.home {
+    text-align: center;
+}
+
+.banner {
+    width: 100%;
+    height: auto;
+    max-height: 400px;
+    object-fit: cover;
+}
+
+.home-title {
+    margin-top: 20px;
+}

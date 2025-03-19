@@ -1,0 +1,45 @@
+.home {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.banner {
+    width: auto;
+    max-width: 100%;
+    height: auto;
+    max-height: 300px;
+    object-fit: contain;
+    margin: 20px 0;
+}
+
+.home-title {
+    margin-top: 20px;
+    width: 100%;
+}
+
+.home-title h1 {
+    font-size: 2rem;
+}
+
+/* レスポンシブ対応 */
+@media (max-width: 768px) {
+    .banner {
+        max-height: 200px;
+    }
+    
+    .home-title h1 {
+        font-size: 1.8rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .banner {
+        max-height: 150px;
+    }
+    
+    .home-title h1 {
+        font-size: 1.5rem;
+    }
+}
