@@ -1,13 +1,23 @@
 .game-item-calculator {
     text-align: center;
+    margin-bottom: 40px; /* フッターとの隙間 */
 }
 
 .game-item-calculator h2 {
     margin-bottom: 20px;
+    font-size: 1.8rem;
 }
 
 .form-section {
     margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.form-section h3 {
+    font-size: 1.5rem;
+    margin-bottom: 15px;
 }
 
 .form-section input,
@@ -15,10 +25,11 @@
 .form-section button {
     width: 80%;
     padding: 10px;
-    margin: 5px 0;
+    margin: 8px 0;
     border: 1px solid #444;
     border-radius: 5px;
-    font-size: 16px;
+    font-size: 1rem;
+    max-width: 500px;
 }
 
 .form-section button {
@@ -26,6 +37,7 @@
     color: #fff;
     cursor: pointer;
     transition: background 0.3s ease;
+    font-weight: bold;
 }
 
 .form-section button:hover {
@@ -35,8 +47,115 @@
 .result {
     margin-top: 20px;
     background-color: #2e2e2e;
-    padding: 10px;
+    padding: 15px;
     border-radius: 5px;
-    font-size: 18px;
+    font-size: 1.1rem;
     text-align: left;
+    width: 80%;
+    max-width: 500px;
+    line-height: 1.6;
+}
+
+/* 武器のクオリティ別価格計算用のスタイル */
+.weapon-price-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+    background-color: #2e2e2e;
+    border-radius: 5px;
+    overflow: hidden;
+}
+
+.weapon-price-table th,
+.weapon-price-table td {
+    padding: 8px;
+    text-align: center;
+    border: 1px solid #444;
+}
+
+.weapon-price-table th {
+    background-color: #1e1e1e;
+    color: #f0f0f0;
+    font-weight: bold;
+}
+
+/* クオリティ別の色 */
+.quality-SSS { color: #ff5555; font-weight: bold; }
+.quality-SS { color: #ffff55; font-weight: bold; }
+.quality-S { color: #55aaff; font-weight: bold; }
+.quality-A { color: #ffaa55; font-weight: bold; }
+.quality-B { color: #aa55ff; font-weight: bold; }
+.quality-C { color: #55ff55; font-weight: bold; }
+.quality-D { color: #aaaaaa; font-weight: bold; }
+.quality-E { color: #888888; font-weight: bold; }
+.quality-F { color: #666666; font-weight: bold; }
+
+/* レスポンシブ対応 */
+@media (max-width: 768px) {
+    .game-item-calculator h2 {
+        font-size: 1.6rem;
+    }
+    
+    .form-section h3 {
+        font-size: 1.3rem;
+    }
+    
+    .form-section input,
+    .form-section select,
+    .form-section button {
+        width: 90%;
+        font-size: 0.9rem;
+    }
+    
+    .result {
+        width: 90%;
+        font-size: 1rem;
+        padding: 12px;
+    }
+    
+    .weapon-price-table th,
+    .weapon-price-table td {
+        padding: 6px;
+        font-size: 0.9rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .game-item-calculator h2 {
+        font-size: 1.4rem;
+    }
+    
+    .form-section h3 {
+        font-size: 1.2rem;
+    }
+    
+    .form-section input,
+    .form-section select,
+    .form-section button {
+        width: 95%;
+        font-size: 0.85rem;
+        padding: 8px;
+    }
+    
+    .result {
+        width: 95%;
+        font-size: 0.9rem;
+        padding: 10px;
+    }
+    
+    .weapon-price-table th,
+    .weapon-price-table td {
+        padding: 4px;
+        font-size: 0.8rem;
+    }
+}
+
+/* 横向き（landscape）のタブレット */
+@media (max-width: 1024px) and (orientation: landscape) {
+    .form-section input,
+    .form-section select,
+    .form-section button {
+        padding: 8px;
+        margin: 5px 0;
+    }
 }

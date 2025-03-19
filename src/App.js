@@ -4,6 +4,8 @@ import Header from './components/Header';
 import Home from './pages/Home/Home';
 import GameItemCalculator from './pages/GameItemCalculator/GameItemCalculator';
 import ProductionCalculator from './pages/ProductionCalculator/ProductionCalculator';
+import CombatJobCalculator from './pages/CombatJobCalculator/CombatJobCalculator';
+import Footer from './components/Footer';
 
 function App() {
     return (
@@ -14,7 +16,9 @@ function App() {
                     <Route path="/" element={<Home />} />
                     <Route path="/game-item" element={<GameItemCalculator />} />
                     <Route path="/production" element={<ProductionCalculator />} />
+                    <Route path="/combat-job" element={<CombatJobCalculator />} />
                 </Routes>
+                <Footer />
             </div>
         </Router>
     );

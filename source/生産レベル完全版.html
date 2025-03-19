@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>経験値計算</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            background: white;
+            width: 80%;
+            max-width: 400px;
+            margin: 50px auto;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        h2 {
+            color: #333;
+        }
+
+        label {
+            font-weight: bold;
+            display: block;
+            margin-top: 10px;
+        }
+
+        select, input {
+            width: 80%;
+            padding: 8px;
+            margin: 5px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+
+        button {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            font-size: 16px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background 0.3s ease;
+            margin-top: 10px;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        #result {
+            margin-top: 20px;
+            font-size: 18px;
+            background: #ffebcc;
+            padding: 15px;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+            text-align: left;
+        }
+
+        .exp { color: #d9534f; font-weight: bold; }
+        .count { color: #0275d8; font-weight: bold; }
+        .resource { color: #5cb85c; font-weight: bold; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>経験値計算機</h2>
+        
+        <label for="category">カテゴリ選択:</label>
+        <select id="category">
+            <option value="武器">⚔️ 武器</option>
+            <option value="防具">🛡 防具</option>
+            <option value="道具">🛠 道具</option>
+            <option value="採掘">⛏ 採掘</option>
+            <option value="採取">🌿 採取</option>
+            <option value="釣り">🎣 釣り</option>
+        </select>
+
+        <label for="currentLevel">現在のレベル:</label>
+        <input type="number" id="currentLevel" min="1" value="1">
+        
+        <label for="targetLevel">目標のレベル:</label>
+        <input type="number" id="targetLevel" min="1" value="10">
+        
+        <button onclick="calculate()">計算する</button>
+
+        <div id="result"></div>
+    </div>
+
+    <script>
+        function experienceFormula(x, type) {
+            return (type === "武器") ? (x ** 2 + 2 * x + 1) : (x ** 2 + 4 * x + 1);
+        }
+
+        function formatTime(seconds) {
+            let hours = Math.floor(seconds / 3600);
+            let minutes = Math.floor((seconds % 3600) / 60);
+            let secs = seconds % 60;
+            return `${hours}時間 ${minutes}分 ${secs}秒`;
+        }
+
+        function calculate() {
+            let category = document.getElementById("category").value;
+            let currentLevel = parseInt(document.getElementById("currentLevel").value);
+            let targetLevel = parseInt(document.getElementById("targetLevel").value);
+
+            if (currentLevel >= targetLevel) {
+                document.getElementById("result").innerHTML = "<p>❌ <strong>目標レベルは現在のレベルより高くしてください。</strong></p>";
+                return;
+            }
+
+            let totalExp = 0;
+            let values = [];
+
+            for (let x = currentLevel; x < targetLevel; x++) {
+                let y = experienceFormula(x, category);
+                totalExp += y;
+                values.push(y);
+            }
+
+            let extraData = "";
+            let emoji = "";
+
+            if (category === "武器" || category === "防具") {
+                let sandF = values.reduce((sum, y) => sum + Math.ceil(y / 114), 0);
+                let sandAmount = sandF * 20;
+                emoji = category === "武器" ? "⚔️" : "🛡";
+                extraData = `<p>📦 <span class="count">砂塵F作成回数:</span> ${sandF} 回</p>
+                             <p>🪨 <span class="resource">必要な砂岩砂の数:</span> ${sandAmount}</p>`;
+            } 
+            else if (category === "道具") {
+                let sandF = values.reduce((sum, y) => sum + Math.ceil(y / 69), 0);
+                let sandAmount = sandF * 15;
+                emoji = "🛠";
+                extraData = `<p>📦 <span class="count">砂塵F作成回数:</span> ${sandF} 回</p>
+                             <p>🪨 <span class="resource">必要な砂岩砂の数:</span> ${sandAmount}</p>`;
+            } 
+            else if (category === "採掘") {
+                let repolo = values.reduce((sum, y) => sum + Math.ceil(y / 5), 0);
+                let solsolo = values.reduce((sum, y) => sum + Math.ceil(y / 10), 0);
+                let sapunera = values.reduce((sum, y) => sum + Math.ceil(y / 15), 0);
+                emoji = "⛏";
+                extraData = `<p>🛠 <span class="count">レポロ・マクルダ・ルーチェア:</span> ${repolo}</p>
+                             <p>🏰 <span class="count">ソルソロ:</span> ${solsolo}</p>
+                             <p>👑 <span class="resource">サプネラ:</span> ${sapunera}</p>`;
+            } 
+            else if (category === "採取") {
+                let repolo = values.reduce((sum, y) => sum + Math.ceil(y / 15), 0);
+                let sapunera = values.reduce((sum, y) => sum + Math.ceil(y / 20), 0);
+                emoji = "🌿";
+                extraData = `<p>🛠 <span class="count">サプネラ以外:</span> ${repolo}</p>
+                             <p>👑 <span class="resource">サプネラ:</span> ${sapunera}</p>`;
+            } 
+            else if (category === "釣り") {
+                let fishingTimes = values.reduce((sum, y) => sum + Math.ceil(y / 5), 0);
+                let totalSeconds = fishingTimes * 15;
+                let formattedTime = formatTime(totalSeconds);
+                emoji = "🎣";
+                extraData = `<p>🎣 <span class="count">釣る回数:</span> ${fishingTimes} 回</p>
+                             <p>⏳ <span class="resource">必要な時間:</span> ${formattedTime}</p>`;
+            }
+
+            document.getElementById("result").innerHTML = `
+                <h4>${emoji} ${category}</h4>
+                <p>🔢 <span class="exp">合計必要経験値:</span> ${totalExp}</p>
+                ${extraData}
+            `;
+        }
+    </script>
+</body>
+</html>
