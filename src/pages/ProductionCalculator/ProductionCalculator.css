@@ -1,0 +1,38 @@
+.production-calculator {
+    text-align: center;
+}
+
+.production-calculator h2 {
+    margin-bottom: 20px;
+}
+
+.production-calculator input,
+.production-calculator select,
+.production-calculator button {
+    width: 80%;
+    padding: 10px;
+    margin: 5px 0;
+    border: 1px solid #444;
+    border-radius: 5px;
+    font-size: 16px;
+}
+
+.production-calculator button {
+    background-color: #007bff;
+    color: #fff;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+.production-calculator button:hover {
+    background-color: #0056b3;
+}
+
+.result {
+    margin-top: 20px;
+    background-color: #2e2e2e;
+    padding: 10px;
+    border-radius: 5px;
+    font-size: 18px;
+    text-align: left;
+}
