@@ -102,49 +102,63 @@
         }
 
     function calculateJobLevel() {
-        let jobType = document.getElementById("jobType").value;
-        let x1 = parseInt(document.getElementById("currentJobLevel").value);
-        let x2 = parseInt(document.getElementById("targetJobLevel").value);
+    let jobType = document.getElementById("jobType").value;
+    let x1 = parseInt(document.getElementById("currentJobLevel").value);
+    let x2 = parseInt(document.getElementById("targetJobLevel").value);
+    let specifiedXP = parseInt(document.getElementById("specifiedXP").value);
 
-        if (isNaN(x1) || isNaN(x2) || x1 >= x2) {
-            alert("⚠️ 正しい数値を入力してください！");
-            return;
-        }
-
-        let formula;
-        switch (jobType) {
-            case "special":
-                formula = (x) => x ** 2 + 4 * x + 1;
-                break;
-            case "first":
-                formula = (x) => 2 * x ** 2 + 12 * x + 58;
-                break;
-            case "second":
-                formula = (x) => 4 * x ** 2 + 64 * x + 2644;
-                break;
-            case "third":
-                formula = (x) => 4 * x ** 2 + 116 * x + 4576;
-                break;
-            default:
-                return;
-        }
-
-        let experienceNeeded = 0;
-        for (let i = x1; i < x2; i++) {
-            experienceNeeded += formula(i);
-        }
-
-        let sandstoneCount = Math.ceil(experienceNeeded / 1030);
-        let requiredSandstone = sandstoneCount * 30;
-        let guardianCount = Math.ceil(experienceNeeded / 2075);
-
-        document.getElementById("jobLevelResult").innerHTML = `
-            📈 必要経験値量: <strong>${experienceNeeded}</strong><br>
-            ⛏ 砂岩納品回数: <strong>${sandstoneCount}</strong><br>
-            🪨 必要な砂岩の数: <strong>${requiredSandstone}</strong><br>
-            🏰 番人回数: <strong>${guardianCount}</strong>
-        `;
+    if (isNaN(x1) || isNaN(x2) || x1 >= x2) {
+        alert("⚠️ 正しい数値を入力してください！");
+        return;
     }
+
+    let formula;
+    switch (jobType) {
+        case "special":
+            formula = (x) => x ** 2 + 4 * x + 1;
+            break;
+        case "first":
+            formula = (x) => 2 * x ** 2 + 12 * x + 58;
+            break;
+        case "second":
+            formula = (x) => 4 * x ** 2 + 64 * x + 2644;
+            break;
+        case "third":
+            formula = (x) => 4 * x ** 2 + 116 * x + 4576;
+            break;
+        default:
+            return;
+    }
+
+    let experienceNeeded = 0;
+    let sandstoneTotal = 0;
+    let guardianTotal = 0;
+    let specifiedXPTotal = 0; // 指定XPでの納品回数
+
+    for (let i = x1; i < x2; i++) {
+        let y = formula(i);
+        experienceNeeded += y;
+        sandstoneTotal += Math.ceil(y / 1030);
+        guardianTotal += Math.ceil(y / 2075);
+
+        if (!isNaN(specifiedXP) && specifiedXP > 0) {
+            specifiedXPTotal += Math.ceil(y / specifiedXP); // 各yを指定XPで割って切り上げ
+        }
+    }
+
+    let requiredSandstone = sandstoneTotal * 30;
+
+    document.getElementById("jobLevelResult").innerHTML = `
+        📈 必要経験値量: <strong>${experienceNeeded}</strong><br>
+        ⛏ 砂岩納品回数: <strong>${sandstoneTotal}</strong><br>
+        🪨 必要な砂岩の数: <strong>${requiredSandstone}</strong><br>
+        🏰 番人回数: <strong>${guardianTotal}</strong><br>
+        ${specifiedXPTotal > 0 ? `📊 指定XP回数: <strong>${specifiedXPTotal}</strong>` : ""}
+    `;
+}
+
+
+
 
         function calculateSandstone() {
             let sandstoneCount = parseInt(document.getElementById("sandstoneCount").value);
@@ -199,6 +213,8 @@
             </select>
             <input type="number" id="currentJobLevel" placeholder="現在のレベル">
             <input type="number" id="targetJobLevel" placeholder="目標のレベル">
+            <input type="number" id="specifiedXP" placeholder="指定XP (任意)">
+
             <button onclick="calculateJobLevel()">計算する</button>
             <div id="jobLevelResult" class="result"></div>
         </div>

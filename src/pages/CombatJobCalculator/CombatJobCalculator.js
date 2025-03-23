@@ -5,15 +5,19 @@ function CombatJobCalculator() {
     const [jobType, setJobType] = useState('special');
     const [currentJobLevel, setCurrentJobLevel] = useState('');
     const [targetJobLevel, setTargetJobLevel] = useState('');
+    const [specifiedXP, setSpecifiedXP] = useState(''); // 指定XP用の状態を追加
     const [jobLevelResult, setJobLevelResult] = useState(null);
 
     const calculateJobLevel = () => {
         const x1 = parseInt(currentJobLevel);
         const x2 = parseInt(targetJobLevel);
+        const xp = parseInt(specifiedXP); // 指定XPを取得
+        
         if (isNaN(x1) || isNaN(x2) || x1 >= x2) {
             alert("⚠️ 正しい数値を入力してください！");
             return;
         }
+        
         let formula;
         switch (jobType) {
             case "special":
@@ -31,19 +35,35 @@ function CombatJobCalculator() {
             default:
                 return;
         }
+        
         let experienceNeeded = 0;
+        let sandstoneTotal = 0;
+        let guardianTotal = 0;
+        let specifiedXPTotal = 0; // 指定XPでの納品回数
+        
         for (let i = x1; i < x2; i++) {
-            experienceNeeded += formula(i);
+            let y = formula(i);
+            experienceNeeded += y;
+            sandstoneTotal += Math.ceil(y / 1030);
+            guardianTotal += Math.ceil(y / 2075);
+            
+            // 指定XPが入力されている場合、その回数を計算
+            if (!isNaN(xp) && xp > 0) {
+                specifiedXPTotal += Math.ceil(y / xp);
+            }
         }
-        let sandstoneCount = Math.ceil(experienceNeeded / 1030);
-        let requiredSandstone = sandstoneCount * 30;
-        let guardianCount = Math.ceil(experienceNeeded / 2075);
+        
+        let requiredSandstone = sandstoneTotal * 30;
+        
         setJobLevelResult(
             <>
                 📈 必要経験値量: <strong>{experienceNeeded}</strong><br />
-                ⛏ 砂岩納品回数: <strong>{sandstoneCount}</strong><br />
+                ⛏ 砂岩納品回数: <strong>{sandstoneTotal}</strong><br />
                 🪨 必要な砂岩の数: <strong>{requiredSandstone}</strong><br />
-                🏰 番人回数: <strong>{guardianCount}</strong>
+                🏰 番人回数: <strong>{guardianTotal}</strong><br />
+                {specifiedXPTotal > 0 && (
+                    <>📊 指定XP回数: <strong>{specifiedXPTotal}</strong></>
+                )}
             </>
         );
     };
@@ -70,6 +90,12 @@ function CombatJobCalculator() {
                     placeholder="目標のレベル"
                     value={targetJobLevel}
                     onChange={(e) => setTargetJobLevel(e.target.value)}
+                />
+                <input
+                    type="number"
+                    placeholder="指定XP (任意)"
+                    value={specifiedXP}
+                    onChange={(e) => setSpecifiedXP(e.target.value)}
                 />
                 <button onClick={calculateJobLevel}>計算する</button>
                 <div className="result">{jobLevelResult}</div>
