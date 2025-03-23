@@ -66,6 +66,16 @@ function ProductionCalculator() {
                     <p>🌿 <strong>サプネラ:</strong> {sapunera}</p>
                 </>
             );
+        } else if (category === "採取") {
+            const repolo = values.reduce((sum, y) => sum + Math.ceil(y / 15), 0);
+            const sapunera = values.reduce((sum, y) => sum + Math.ceil(y / 20), 0);
+            emoji = "🌿";
+            extraData = (
+                <>
+                    <p>🛠 <strong>サプネラ以外:</strong> {repolo}</p>
+                    <p>👑 <strong>サプネラ:</strong> {sapunera}</p>
+                </>
+            );
         } else if (category === "釣り") {
             const fishingTimes = values.reduce((sum, y) => sum + Math.ceil(y / 5), 0);
             const totalSeconds = fishingTimes * 15;
