@@ -9,8 +9,9 @@ function GameItemCalculator() {
     const [stoneLevel, setStoneLevel] = useState('');
     const [magicStoneResult, setMagicStoneResult] = useState(null);
 
-    const [sandstoneCount, setSandstoneCount] = useState('');
-    const [sandstoneResult, setSandstoneResult] = useState(null);
+    const [deliveryItemType, setDeliveryItemType] = useState('sandstone');
+    const [deliveryCount, setDeliveryCount] = useState('');
+    const [deliveryResult, setDeliveryResult] = useState(null);
 
     // 武器のクオリティ別価格計算用の状態
     const [quality, setQuality] = useState('SSS');
@@ -41,21 +42,51 @@ function GameItemCalculator() {
         );
     };
 
-    const calculateSandstone = () => {
-        let count = parseInt(sandstoneCount);
+    const calculateDeliveryReward = () => {
+        let count = parseInt(deliveryCount);
         if (isNaN(count) || count <= 0) {
             alert("⚠️ 正しい数値を入力してください！");
             return;
         }
-        while (count % 30 !== 0) {
-            count--;
+
+        let magicStoneLv2 = 0;
+        let magicStoneLv3 = 0;
+        let gold = 0;
+        
+        switch (deliveryItemType) {
+            case 'sandstone':
+                // 砂岩30個(lv2:20,ゴールド1060)
+                const sandstoneDeliveries = Math.floor(count / 30);
+                magicStoneLv2 = sandstoneDeliveries * 20;
+                gold = sandstoneDeliveries * 1060;
+                break;
+            case 'sandyLeather':
+                // 砂まみれの革30個(lv3:12,ゴールド1360)
+                const leatherDeliveries = Math.floor(count / 30);
+                magicStoneLv3 = leatherDeliveries * 12;
+                gold = leatherDeliveries * 1360;
+                break;
+            case 'poisonNeedle':
+                // 毒針30個(lv3:12,ゴールド1480)
+                const needleDeliveries = Math.floor(count / 30);
+                magicStoneLv3 = needleDeliveries * 12;
+                gold = needleDeliveries * 1480;
+                break;
+            case 'totem':
+                // トーテム25個(lv2:18,ゴールド2780)
+                const totemDeliveries = Math.floor(count / 25);
+                magicStoneLv2 = totemDeliveries * 18;
+                gold = totemDeliveries * 2780;
+                break;
+            default:
+                break;
         }
-        let magicStoneLv2 = Math.floor((count / 3) * 2);
-        let magicStoneLv3 = Math.floor((count / 9) * 4);
-        setSandstoneResult(
+
+        setDeliveryResult(
             <>
                 🟩 魔法石Lv2: <strong>{magicStoneLv2}</strong><br />
-                🟦 魔法石Lv3: <strong>{magicStoneLv3}</strong>
+                🟦 魔法石Lv3: <strong>{magicStoneLv3}</strong><br />
+                💰 ゴールド: <strong>{gold.toLocaleString()}</strong>
             </>
         );
     };
@@ -111,7 +142,7 @@ function GameItemCalculator() {
             <label>🛠 計算の種類を選択:</label>
             <select value={calcType} onChange={(e) => setCalcType(e.target.value)}>
                 <option value="magicStone">🔮 魔法石の強化</option>
-                <option value="sandstone">⛏ 砂岩→魔法石変換</option>
+                <option value="deliveryReward">📦 納品報酬計算</option>
                 <option value="weaponPrice">💰 武器のクオリティ別価格計算</option>
             </select>
             {calcType === 'magicStone' && (
@@ -145,17 +176,52 @@ function GameItemCalculator() {
                     <div className="result">{magicStoneResult}</div>
                 </div>
             )}
-            {calcType === 'sandstone' && (
+            {calcType === 'deliveryReward' && (
                 <div className="form-section">
-                    <h3>⛏ 砂岩→魔法石変換</h3>
-                    <input
-                        type="number"
-                        placeholder="砂岩の数"
-                        value={sandstoneCount}
-                        onChange={(e) => setSandstoneCount(e.target.value)}
-                    />
-                    <button onClick={calculateSandstone}>計算する</button>
-                    <div className="result">{sandstoneResult}</div>
+                    <h3>📦 納品報酬計算</h3>
+                    <label>納品アイテムの種類:</label>
+                    <select value={deliveryItemType} onChange={(e) => setDeliveryItemType(e.target.value)}>
+                        <option value="sandstone">砂岩</option>
+                        <option value="sandyLeather">砂まみれの革</option>
+                        <option value="poisonNeedle">毒針</option>
+                        <option value="totem">トーテム</option>
+                    </select>
+                    
+                    {deliveryItemType === 'sandstone' && (
+                        <input
+                            type="number"
+                            placeholder="砂岩の数"
+                            value={deliveryCount}
+                            onChange={(e) => setDeliveryCount(e.target.value)}
+                        />
+                    )}
+                    {deliveryItemType === 'sandyLeather' && (
+                        <input
+                            type="number"
+                            placeholder="砂まみれの革の数"
+                            value={deliveryCount}
+                            onChange={(e) => setDeliveryCount(e.target.value)}
+                        />
+                    )}
+                    {deliveryItemType === 'poisonNeedle' && (
+                        <input
+                            type="number"
+                            placeholder="毒針の数"
+                            value={deliveryCount}
+                            onChange={(e) => setDeliveryCount(e.target.value)}
+                        />
+                    )}
+                    {deliveryItemType === 'totem' && (
+                        <input
+                            type="number"
+                            placeholder="トーテムの数"
+                            value={deliveryCount}
+                            onChange={(e) => setDeliveryCount(e.target.value)}
+                        />
+                    )}
+                    
+                    <button onClick={calculateDeliveryReward}>計算する</button>
+                    <div className="result">{deliveryResult}</div>
                 </div>
             )}
             {calcType === 'weaponPrice' && (

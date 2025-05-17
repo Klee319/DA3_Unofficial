@@ -54,6 +54,29 @@ function ProductionCalculator() {
                     <p>🪨 <strong>必要な砂岩砂の数:</strong> {sandAmount}</p>
                 </>
             );
+        } else if (category === "錬金") {
+            // 提供されたHTMLのロジックに基づいて計算
+            // 錬金回数計算：各レベルの経験値を必要な分子／分母で割って切り上げ
+            const alchemyCount = values.reduce((sum, exp, index) => {
+                const level = cur + index;
+                const denominator = Math.round(level / 2) + Math.round(level / 2 + 3);
+                return sum + Math.ceil(exp / denominator);
+            }, 0);
+            
+            // 必要魔結晶数は錬金回数 * 5
+            const crystalAmount = alchemyCount * 5;
+            // 必要金額は魔結晶数 * 500円
+            const totalCost = crystalAmount * 500;
+            
+            emoji = "☆";
+            extraData = (
+                <>
+                    <p>🧪 <strong>錬金回数:</strong> {alchemyCount} 回</p>
+                    <p>💎 <strong>必要魔結晶数:</strong> {crystalAmount} 個</p>
+                    <p>💰 <strong>必要金額:</strong> {totalCost.toLocaleString()} ゴールド</p>
+                    <p className="alchemy-note">※ <strong>Quality:Fの初級攻撃力錬金の場合</strong></p>
+                </>
+            );
         } else if (category === "採掘") {
             const repolo = values.reduce((sum, y) => sum + Math.ceil(y / 5), 0);
             const solsolo = values.reduce((sum, y) => sum + Math.ceil(y / 10), 0);
@@ -105,6 +128,7 @@ function ProductionCalculator() {
                 <option value="武器">⚔️ 武器</option>
                 <option value="防具">🛡 防具</option>
                 <option value="道具">🛠 道具</option>
+                <option value="錬金">☆ 錬金</option>
                 <option value="採掘">⛏ 採掘</option>
                 <option value="採取">🌿 採取</option>
                 <option value="釣り">🎣 釣り</option>

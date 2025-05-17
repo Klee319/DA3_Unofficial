@@ -38,6 +38,9 @@ function CombatJobCalculator() {
         
         let experienceNeeded = 0;
         let sandstoneTotal = 0;
+        let sandyLeatherTotal = 0;
+        let poisonNeedleTotal = 0;
+        let totemTotal = 0;
         let guardianTotal = 0;
         let specifiedXPTotal = 0; // 指定XPでの納品回数
         
@@ -45,6 +48,9 @@ function CombatJobCalculator() {
             let y = formula(i);
             experienceNeeded += y;
             sandstoneTotal += Math.ceil(y / 1030);
+            sandyLeatherTotal += Math.ceil(y / 1330);
+            poisonNeedleTotal += Math.ceil(y / 1480);
+            totemTotal += Math.ceil(y / 3190);
             guardianTotal += Math.ceil(y / 2075);
             
             // 指定XPが入力されている場合、その回数を計算
@@ -54,13 +60,32 @@ function CombatJobCalculator() {
         }
         
         let requiredSandstone = sandstoneTotal * 30;
+        let requiredSandyLeather = sandyLeatherTotal * 30;
+        let requiredPoisonNeedle = poisonNeedleTotal * 30;
+        let requiredTotem = totemTotal * 25;
         
         setJobLevelResult(
             <>
-                📈 必要経験値量: <strong>{experienceNeeded}</strong><br />
-                ⛏ 砂岩納品回数: <strong>{sandstoneTotal}</strong><br />
-                🪨 必要な砂岩の数: <strong>{requiredSandstone}</strong><br />
+                📈 必要経験値量: <strong>{experienceNeeded}</strong><br /><br />
+
                 🏰 番人回数: <strong>{guardianTotal}</strong><br />
+                
+                砂岩：<br />
+                &emsp;回数：<strong>{sandstoneTotal}</strong><br />
+                &emsp;個数：<strong>{requiredSandstone}</strong><br /><br />
+                
+                砂まみれの革：<br />
+                &emsp;回数：<strong>{sandyLeatherTotal}</strong><br />
+                &emsp;個数：<strong>{requiredSandyLeather}</strong><br /><br />
+                
+                毒針：<br />
+                &emsp;回数：<strong>{poisonNeedleTotal}</strong><br />
+                &emsp;個数：<strong>{requiredPoisonNeedle}</strong><br /><br />
+                
+                トーテム：<br />
+                &emsp;回数：<strong>{totemTotal}</strong><br />
+                &emsp;個数：<strong>{requiredTotem}</strong><br /><br />
+                
                 {specifiedXPTotal > 0 && (
                     <>📊 指定XP回数: <strong>{specifiedXPTotal}</strong></>
                 )}
