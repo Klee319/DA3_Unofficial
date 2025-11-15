@@ -33,9 +33,11 @@
     white-space: nowrap; /* 改行を防止 */
 }
 
-/* 通常表示時のTOPリンクを2px下にずらす */
+
+
+/* TOPリンクを3px下にずらす */
 .nav a:first-child {
-    transform: translateY(2px);
+    transform: translateY(3px);
 }
 
 .nav a:hover {
