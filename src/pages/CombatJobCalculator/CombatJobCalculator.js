@@ -1,5 +1,6 @@
 import React, { useState, useMemo } from 'react';
 import './CombatJobCalculator.css';
+import CustomSelect from '../../components/CustomSelect/CustomSelect';
 
 function CombatJobCalculator() {
     // タブの状態管理
@@ -274,20 +275,18 @@ function CombatJobCalculator() {
                 
                 {/* 共通入力エリア */}
                 <div className="input-card">
-                    <div className="form-group">
-                        <label htmlFor="jobType">職業タイプ</label>
-                        <select 
-                            id="jobType"
-                            className="form-select"
-                            value={jobType} 
-                            onChange={(e) => setJobType(e.target.value)}
-                        >
-                            <option value="special">特殊職</option>
-                            <option value="first">一次職</option>
-                            <option value="second">二次職</option>
-                            <option value="third">三次職</option>
-                        </select>
-                    </div>
+                    <CustomSelect
+                        id="jobType"
+                        label="職業タイプ"
+                        value={jobType}
+                        onChange={(e) => setJobType(e.target.value)}
+                        options={[
+                            { value: 'special', label: '特殊職' },
+                            { value: 'first', label: '一次職' },
+                            { value: 'second', label: '二次職' },
+                            { value: 'third', label: '三次職' }
+                        ]}
+                    />
                     
                     <div className="form-row">
                         <div className="form-group">

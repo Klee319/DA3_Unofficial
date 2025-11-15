@@ -96,28 +96,51 @@
     font-size: 1rem;
     font-weight: 500;
     color: #fff;
-    background: #2a2a2a;
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    border-radius: 12px;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: 16px;
     outline: none;
     transition: all 0.3s ease;
+    cursor: pointer;
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
 }
 
 .form-select:hover,
 .form-input:hover {
-    background: #333333;
-    border-color: rgba(255, 255, 255, 0.15);
+    background: rgba(255, 255, 255, 0.05);
+    border-color: rgba(255, 255, 255, 0.08);
 }
 
 .form-select:focus,
 .form-input:focus {
-    background: #333333;
-    border-color: #2563eb;
-    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
+    background: rgba(255, 255, 255, 0.06);
+    border-color: rgba(37, 99, 235, 0.3);
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
 }
 
 .form-input::placeholder {
     color: rgba(255, 255, 255, 0.3);
+}
+
+.form-select option {
+    background-color: #2a2a2a !important;
+    background: #2a2a2a !important;
+    color: #ffffff !important;
+    padding: 0.75rem 1rem !important;
+    font-weight: 500 !important;
+    font-size: 1rem !important;
+}
+
+.form-select option:hover {
+    background-color: #3b82f6 !important;
+    background: #3b82f6 !important;
+}
+
+.form-select option:checked {
+    background-color: #2563eb !important;
+    background: linear-gradient(90deg, #2563eb 0%, #3b82f6 100%) !important;
 }
 
 /* チェックボックス */
@@ -380,13 +403,7 @@
     }
 }
 
-/* ダークモード微調整 */
-@media (prefers-color-scheme: dark) {
-    .form-select option {
-        background: #1a1a1a;
-        color: #fff;
-    }
-}
+
 
 /* スクロールバーカスタマイズ */
 .combat-job-calculator::-webkit-scrollbar {

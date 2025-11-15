@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import './GameItemCalculator.css';
+import CustomSelect from '../../components/CustomSelect/CustomSelect';
 
 function GameItemCalculator() {
     const [calcType, setCalcType] = useState('magicStone');
@@ -374,21 +375,19 @@ function GameItemCalculator() {
                 {calcType === 'deliveryReward' && (
                     <div className="calc-card">
                         <h2 className="card-title">📦 納品報酬計算</h2>
-                        <div className="form-group">
-                            <label className="form-label">納品アイテムの種類</label>
-                            <select
-                                className="form-select"
-                                value={deliveryItemType}
-                                onChange={(e) => setDeliveryItemType(e.target.value)}
-                            >
-                                <option value="sandstone">砂岩 (30個納品)</option>
-                                <option value="sandyLeather">砂まみれの革 (30個納品)</option>
-                                <option value="poisonNeedle">毒針 (30個納品)</option>
-                                <option value="totem">トーテム (25個納品)</option>
-                                <option value="shadowFragment">影の欠片 (5個納品)</option>
-                                <option value="waterBottle">水の入った瓶 (32個納品)</option>
-                            </select>
-                        </div>
+                        <CustomSelect
+                            label="納品アイテムの種類"
+                            value={deliveryItemType}
+                            onChange={(e) => setDeliveryItemType(e.target.value)}
+                            options={[
+                                { value: 'sandstone', label: '砂岩 (30個納品)' },
+                                { value: 'sandyLeather', label: '砂まみれの革 (30個納品)' },
+                                { value: 'poisonNeedle', label: '毒針 (30個納品)' },
+                                { value: 'totem', label: 'トーテム (25個納品)' },
+                                { value: 'shadowFragment', label: '影の欠片 (5個納品)' },
+                                { value: 'waterBottle', label: '水の入った瓶 (32個納品)' }
+                            ]}
+                        />
                         <div className="form-group">
                             <label className="form-label">アイテムの個数</label>
                             <input
@@ -414,24 +413,22 @@ function GameItemCalculator() {
                 {calcType === 'weaponPrice' && (
                     <div className="calc-card">
                         <h2 className="card-title">⚔️ 武器のクオリティ別価格計算</h2>
-                        <div className="form-group">
-                            <label className="form-label">基準クオリティ</label>
-                            <select
-                                className="form-select"
-                                value={quality}
-                                onChange={(e) => setQuality(e.target.value)}
-                            >
-                                <option value="SSS">SSS</option>
-                                <option value="SS">SS</option>
-                                <option value="S">S</option>
-                                <option value="A">A</option>
-                                <option value="B">B</option>
-                                <option value="C">C</option>
-                                <option value="D">D</option>
-                                <option value="E">E</option>
-                                <option value="F">F</option>
-                            </select>
-                        </div>
+                        <CustomSelect
+                            label="基準クオリティ"
+                            value={quality}
+                            onChange={(e) => setQuality(e.target.value)}
+                            options={[
+                                { value: 'SSS', label: 'SSS' },
+                                { value: 'SS', label: 'SS' },
+                                { value: 'S', label: 'S' },
+                                { value: 'A', label: 'A' },
+                                { value: 'B', label: 'B' },
+                                { value: 'C', label: 'C' },
+                                { value: 'D', label: 'D' },
+                                { value: 'E', label: 'E' },
+                                { value: 'F', label: 'F' }
+                            ]}
+                        />
                         <div className="form-group">
                             <label className="form-label">基準価格</label>
                             <input
@@ -494,19 +491,17 @@ function GameItemCalculator() {
                             </div>
                         )}
 
-                        <div className="form-group">
-                            <label className="form-label">モブの種類</label>
-                            <select
-                                className="form-select"
-                                value={mobType}
-                                onChange={(e) => setMobType(e.target.value)}
-                            >
-                                <option value="fanatic">狂信者 lv100~ (420gold, 10秒)</option>
-                                <option value="sandLizard">サンドリザード lv100~ (280gold, 10秒)</option>
-                                <option value="sandScorpion">サンドスコーピオン lv100~ (280gold, 10秒)</option>
-                                <option value="darufGazelle">ダルフガゼル lv100~ (420gold, 10秒)</option>
-                            </select>
-                        </div>
+                        <CustomSelect
+                            label="モブの種類"
+                            value={mobType}
+                            onChange={(e) => setMobType(e.target.value)}
+                            options={[
+                                { value: 'fanatic', label: '狂信者 lv100~' },
+                                { value: 'sandLizard', label: 'サンドリザード lv100~' },
+                                { value: 'sandScorpion', label: 'サンドスコーピオン lv100~' },
+                                { value: 'darufGazelle', label: 'ダルフガゼル lv100~' }
+                            ]}
+                        />
 
                         {['fanatic', 'sandLizard', 'sandScorpion', 'darufGazelle'].includes(mobType) && (
                             <div className="form-group">

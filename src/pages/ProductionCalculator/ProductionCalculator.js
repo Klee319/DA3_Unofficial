@@ -15,14 +15,28 @@ function ProductionCalculator() {
         const hours = Math.floor(seconds / 3600);
         const minutes = Math.floor((seconds % 3600) / 60);
         const secs = seconds % 60;
-        return `${hours}時間 ${minutes}分 ${secs}秒`;
+        const parts = [];
+        if (hours > 0) parts.push(`${hours} 時間`);
+        if (minutes > 0) parts.push(`${minutes} 分`);
+        if (secs > 0 || parts.length === 0) parts.push(`${secs} 秒`);
+        return parts.join(' ');
     };
+
+    const categories = [
+        { id: '武器', name: '⚔️ 武器', emoji: '⚔️' },
+        { id: '防具', name: '🛡 防具', emoji: '🛡' },
+        { id: '道具', name: '🛠 道具', emoji: '🛠' },
+        { id: '錬金', name: '☆ 錬金', emoji: '☆' },
+        { id: '採掘', name: '⛏ 採掘', emoji: '⛏' },
+        { id: '採取', name: '🌿 採取', emoji: '🌿' },
+        { id: '釣り', name: '🎣 釣り', emoji: '🎣' }
+    ];
 
     const calculate = () => {
         const cur = parseInt(currentLevel);
         const target = parseInt(targetLevel);
         if (cur >= target) {
-            setResult(<p>❌ <strong>目標レベルは現在のレベルより高くしてください。</strong></p>);
+            setResult(<p className="error-message">❌ <strong>目標レベルは現在のレベルより高くしてください。</strong></p>);
             return;
         }
         let totalExp = 0;
@@ -40,8 +54,14 @@ function ProductionCalculator() {
             emoji = category === "武器" ? "⚔️" : "🛡";
             extraData = (
                 <>
-                    <p>📦 <strong>砂塵F作成回数:</strong> {sandF} 回</p>
-                    <p>🪨 <strong>必要な砂岩砂の数:</strong> {sandAmount}</p>
+                    <div className="result-item">
+                        <span className="result-label">📦 砂塵F作成回数:</span>
+                        <span className="result-value">{sandF} 回</span>
+                    </div>
+                    <div className="result-item">
+                        <span className="result-label">🪨 必要な砂岩砂の数:</span>
+                        <span className="result-value">{sandAmount}</span>
+                    </div>
                 </>
             );
         } else if (category === "道具") {
@@ -50,31 +70,44 @@ function ProductionCalculator() {
             emoji = "🛠";
             extraData = (
                 <>
-                    <p>📦 <strong>砂塵F作成回数:</strong> {sandF} 回</p>
-                    <p>🪨 <strong>必要な砂岩砂の数:</strong> {sandAmount}</p>
+                    <div className="result-item">
+                        <span className="result-label">📦 砂塵F作成回数:</span>
+                        <span className="result-value">{sandF} 回</span>
+                    </div>
+                    <div className="result-item">
+                        <span className="result-label">🪨 必要な砂岩砂の数:</span>
+                        <span className="result-value">{sandAmount}</span>
+                    </div>
                 </>
             );
         } else if (category === "錬金") {
-            // 提供されたHTMLのロジックに基づいて計算
-            // 錬金回数計算：各レベルの経験値を必要な分子／分母で割って切り上げ
             const alchemyCount = values.reduce((sum, exp, index) => {
                 const level = cur + index;
                 const denominator = Math.round(level / 2) + Math.round(level / 2 + 3);
                 return sum + Math.ceil(exp / denominator);
             }, 0);
-            
-            // 必要魔結晶数は錬金回数 * 5
+
             const crystalAmount = alchemyCount * 5;
-            // 必要金額は魔結晶数 * 500円
             const totalCost = crystalAmount * 500;
-            
+
             emoji = "☆";
             extraData = (
                 <>
-                    <p>🧪 <strong>錬金回数:</strong> {alchemyCount} 回</p>
-                    <p>💎 <strong>必要魔結晶数:</strong> {crystalAmount} 個</p>
-                    <p>💰 <strong>必要金額:</strong> {totalCost.toLocaleString()} ゴールド</p>
-                    <p className="alchemy-note">※ <strong>Quality:Fの初級攻撃力錬金の場合</strong></p>
+                    <div className="result-item">
+                        <span className="result-label">🧪 錬金回数:</span>
+                        <span className="result-value">{alchemyCount} 回</span>
+                    </div>
+                    <div className="result-item">
+                        <span className="result-label">💎 必要魔結晶数:</span>
+                        <span className="result-value">{crystalAmount} 個</span>
+                    </div>
+                    <div className="result-item">
+                        <span className="result-label">💰 必要金額:</span>
+                        <span className="result-value">{totalCost.toLocaleString()} ゴールド</span>
+                    </div>
+                    <div className="result-note">
+                        ※ <strong>Quality:Fの初級攻撃力錬金の場合</strong>
+                    </div>
                 </>
             );
         } else if (category === "採掘") {
@@ -84,9 +117,18 @@ function ProductionCalculator() {
             emoji = "⛏";
             extraData = (
                 <>
-                    <p>🛠 <strong>レポロ・マクルダ・ルーチェア:</strong> {repolo}</p>
-                    <p>🌞 <strong>ソルソロ:</strong> {solsolo}</p>
-                    <p>🌿 <strong>サプネラ:</strong> {sapunera}</p>
+                    <div className="result-item">
+                        <span className="result-label">🛠 レポロ・マクルダ・ルーチェア:</span>
+                        <span className="result-value">{repolo}</span>
+                    </div>
+                    <div className="result-item">
+                        <span className="result-label">🌞 ソルソロ:</span>
+                        <span className="result-value">{solsolo}</span>
+                    </div>
+                    <div className="result-item">
+                        <span className="result-label">🌿 サプネラ:</span>
+                        <span className="result-value">{sapunera}</span>
+                    </div>
                 </>
             );
         } else if (category === "採取") {
@@ -95,8 +137,14 @@ function ProductionCalculator() {
             emoji = "🌿";
             extraData = (
                 <>
-                    <p>🛠 <strong>サプネラ以外:</strong> {repolo}</p>
-                    <p>👑 <strong>サプネラ:</strong> {sapunera}</p>
+                    <div className="result-item">
+                        <span className="result-label">🛠 サプネラ以外:</span>
+                        <span className="result-value">{repolo}</span>
+                    </div>
+                    <div className="result-item">
+                        <span className="result-label">👑 サプネラ:</span>
+                        <span className="result-value">{sapunera}</span>
+                    </div>
                 </>
             );
         } else if (category === "釣り") {
@@ -106,49 +154,79 @@ function ProductionCalculator() {
             emoji = "🎣";
             extraData = (
                 <>
-                    <p>🎣 <strong>釣る回数:</strong> {fishingTimes} 回</p>
-                    <p>⏳ <strong>必要な時間:</strong> {formattedTime}</p>
+                    <div className="result-item">
+                        <span className="result-label">🎣 釣る回数:</span>
+                        <span className="result-value">{fishingTimes} 回</span>
+                    </div>
+                    <div className="result-item">
+                        <span className="result-label">⏳ 必要な時間:</span>
+                        <span className="result-value">{formattedTime}</span>
+                    </div>
                 </>
             );
         }
         setResult(
-            <div>
-                <h4>{emoji} {category}</h4>
-                <p>🔢 <strong>合計必要経験値:</strong> {totalExp}</p>
+            <div className="result-card">
+                <h4 className="result-title">{emoji} {category}</h4>
+                <div className="result-item">
+                    <span className="result-label">🔢 合計必要経験値:</span>
+                    <span className="result-value">{totalExp}</span>
+                </div>
                 {extraData}
             </div>
         );
     };
 
     return (
-        <div className="production-calculator container">
-            <h2>生産レベル計算</h2>
-            <label>カテゴリ選択:</label>
-            <select value={category} onChange={(e) => setCategory(e.target.value)}>
-                <option value="武器">⚔️ 武器</option>
-                <option value="防具">🛡 防具</option>
-                <option value="道具">🛠 道具</option>
-                <option value="錬金">☆ 錬金</option>
-                <option value="採掘">⛏ 採掘</option>
-                <option value="採取">🌿 採取</option>
-                <option value="釣り">🎣 釣り</option>
-            </select>
-            <label>現在のレベル:</label>
-            <input
-                type="number"
-                value={currentLevel}
-                min="1"
-                onChange={(e) => setCurrentLevel(e.target.value)}
-            />
-            <label>目標のレベル:</label>
-            <input
-                type="number"
-                value={targetLevel}
-                min="1"
-                onChange={(e) => setTargetLevel(e.target.value)}
-            />
-            <button onClick={calculate}>計算する</button>
-            <div className="result">{result}</div>
+        <div className="production-calculator">
+            <div className="calculator-container">
+                <h2 className="page-title">生産レベル計算</h2>
+
+                {/* カテゴリ選択カード */}
+                <div className="input-card">
+                    <h3 className="card-title">カテゴリ選択</h3>
+                    <div className="category-grid">
+                        {categories.map(cat => (
+                            <button
+                                key={cat.id}
+                                className={`category-button ${category === cat.id ? 'active' : ''}`}
+                                onClick={() => setCategory(cat.id)}
+                            >
+                                {cat.name}
+                            </button>
+                        ))}
+                    </div>
+                </div>
+
+                {/* レベル設定カード */}
+                <div className="input-card">
+                    <h3 className="card-title">レベル設定</h3>
+                    <div className="input-group">
+                        <label className="input-label">現在のレベル</label>
+                        <input
+                            type="number"
+                            className="input-field"
+                            value={currentLevel}
+                            min="1"
+                            onChange={(e) => setCurrentLevel(e.target.value)}
+                        />
+                    </div>
+                    <div className="input-group">
+                        <label className="input-label">目標のレベル</label>
+                        <input
+                            type="number"
+                            className="input-field"
+                            value={targetLevel}
+                            min="1"
+                            onChange={(e) => setTargetLevel(e.target.value)}
+                        />
+                    </div>
+                    <button className="calc-button" onClick={calculate}>計算する</button>
+                </div>
+
+                {/* 結果表示 */}
+                {result && <div className="result-section">{result}</div>}
+            </div>
         </div>
     );
 }
