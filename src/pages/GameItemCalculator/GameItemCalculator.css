@@ -1,0 +1,421 @@
+/* ゲーム内アイテム計算機のスタイル */
+.game-item-calculator {
+    min-height: calc(100vh - 60px);
+    background: linear-gradient(180deg, #1a1a1a 0%, #0f0f0f 100%);
+    padding: 2rem 1rem;
+}
+
+.calculator-container {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.page-title {
+    font-size: 2.5rem;
+    font-weight: 700;
+    text-align: center;
+    margin-bottom: 3rem;
+    color: #ffffff;
+}
+
+/* 計算タイプセレクター */
+.calc-type-selector {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1rem;
+    margin-bottom: 2rem;
+}
+
+.type-button {
+    background: transparent;
+    border: none;
+    border-bottom: 2px solid transparent;
+    border-radius: 0;
+    padding: 1rem;
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 1rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+}
+
+.type-button:hover {
+    background: rgba(255, 255, 255, 0.05);
+    color: #ffffff;
+}
+
+.type-button.active {
+    background: rgba(59, 130, 246, 0.1);
+    border-bottom-color: #3b82f6;
+    color: #ffffff;
+}
+
+.button-icon {
+    font-size: 1.2rem;
+}
+
+/* カードスタイル */
+.calc-card {
+    background: #181818;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: 12px;
+    padding: 2rem;
+    animation: fadeIn 0.5s ease-out;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.card-title {
+    font-size: 1.8rem;
+    font-weight: 600;
+    margin-bottom: 2rem;
+    text-align: center;
+    color: #ffffff;
+}
+
+/* フォームスタイル */
+.form-group {
+    margin-bottom: 1.5rem;
+}
+
+.form-label {
+    display: block;
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: rgba(255, 255, 255, 0.7);
+    margin-bottom: 0.5rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.form-input,
+.form-select {
+    width: 100%;
+    padding: 0.875rem 1rem;
+    font-size: 1rem;
+    font-weight: 500;
+    color: #fff;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: 16px;
+    outline: none;
+    transition: all 0.3s ease;
+    cursor: pointer;
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+}
+
+.form-input:hover,
+.form-select:hover {
+    background: rgba(255, 255, 255, 0.05);
+    border-color: rgba(255, 255, 255, 0.08);
+}
+
+.form-input:focus,
+.form-select:focus {
+    background: rgba(255, 255, 255, 0.06);
+    border-color: rgba(37, 99, 235, 0.3);
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+}
+
+.form-input::placeholder {
+    color: rgba(255, 255, 255, 0.3);
+}
+
+.form-select option {
+    background-color: #2a2a2a !important;
+    background: #2a2a2a !important;
+    color: #ffffff !important;
+    padding: 0.75rem 1rem !important;
+    font-weight: 500 !important;
+    font-size: 1rem !important;
+}
+
+.form-select option:hover {
+    background-color: #3b82f6 !important;
+    background: #3b82f6 !important;
+}
+
+.form-select option:checked {
+    background-color: #2563eb !important;
+    background: linear-gradient(90deg, #2563eb 0%, #3b82f6 100%) !important;
+}
+
+/* チェックボックスグループ */
+.checkbox-group {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.checkbox-label {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    cursor: pointer;
+    font-size: 1rem;
+    color: rgba(255, 255, 255, 0.8);
+}
+
+.checkbox-input {
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+    accent-color: #3b82f6;
+}
+
+/* モードセレクター */
+.mode-selector {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    margin-bottom: 2rem;
+}
+
+.mode-button {
+    padding: 0.8rem 1.5rem;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 10px;
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 0.95rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.mode-button:hover {
+    background: rgba(255, 255, 255, 0.08);
+}
+
+.mode-button.active {
+    background: #3b82f6;
+    border-color: #3b82f6;
+    color: #ffffff;
+}
+
+/* 計算ボタン */
+.calc-button {
+    width: 100%;
+    padding: 1rem 2rem;
+    background: #3b82f6;
+    border: none;
+    border-radius: 8px;
+    color: #ffffff;
+    font-size: 1.1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-top: 2rem;
+}
+
+.calc-button:hover {
+    background: #2563eb;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(59, 130, 246, 0.2);
+}
+
+.calc-button:active {
+    transform: translateY(0);
+}
+
+/* 結果カード */
+.result-card {
+    margin-top: 2rem;
+    padding: 1.5rem;
+    background: #202020;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: 8px;
+    animation: slideUp 0.5s ease-out;
+}
+
+@keyframes slideUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.result-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.8rem 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.result-item:last-child {
+    border-bottom: none;
+}
+
+.result-label {
+    font-size: 0.95rem;
+    color: rgba(255, 255, 255, 0.6);
+}
+
+.result-value {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #ffffff;
+}
+
+.result-item.warning .result-value {
+    color: #f59e0b;
+}
+
+.result-item.boost .result-value {
+    color: #3b82f6;
+}
+
+/* 武器価格グリッド */
+.weapon-price-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+    gap: 1rem;
+    margin-top: 1rem;
+}
+
+.price-card {
+    background: #202020;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: 8px;
+    padding: 1rem;
+    text-align: center;
+    transition: all 0.3s ease;
+}
+
+.price-card:hover {
+    transform: scale(1.02);
+    background: #252525;
+    border-color: rgba(255, 255, 255, 0.1);
+}
+
+.quality-badge {
+    font-size: 1.2rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+}
+
+.price-value {
+    font-size: 0.9rem;
+    color: rgba(255, 255, 255, 0.8);
+}
+
+/* クオリティ別の色 */
+.quality-SSS .quality-badge { color: #ffffff; }
+.quality-SS .quality-badge { color: #e5e5e5; }
+.quality-S .quality-badge { color: #93c5fd; }
+.quality-A .quality-badge { color: #60a5fa; }
+.quality-B .quality-badge { color: #3b82f6; }
+.quality-C .quality-badge { color: #9ca3af; }
+.quality-D .quality-badge { color: #6b7280; }
+.quality-E .quality-badge { color: #4b5563; }
+.quality-F .quality-badge { color: #374151; }
+
+/* レスポンシブデザイン */
+@media (max-width: 768px) {
+    .page-title {
+        font-size: 2rem;
+        margin-bottom: 2rem;
+    }
+
+    .calc-type-selector {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .calc-card {
+        padding: 1.5rem;
+    }
+
+    .card-title {
+        font-size: 1.5rem;
+    }
+
+    .mode-selector {
+        grid-template-columns: 1fr;
+    }
+
+    .weapon-price-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+@media (max-width: 480px) {
+    .page-title {
+        font-size: 1.75rem;
+    }
+
+    .calc-type-selector {
+        grid-template-columns: 1fr;
+    }
+
+    .type-button {
+        padding: 0.8rem;
+    }
+
+    .calc-card {
+        padding: 1rem;
+        border-radius: 15px;
+    }
+
+    .card-title {
+        font-size: 1.3rem;
+        margin-bottom: 1.5rem;
+    }
+
+    .form-input,
+    .form-select {
+        padding: 0.7rem;
+        font-size: 0.95rem;
+    }
+
+    .calc-button {
+        padding: 0.8rem 1.5rem;
+        font-size: 1rem;
+    }
+
+    .result-card {
+        padding: 1rem;
+    }
+
+    .result-item {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.3rem;
+    }
+
+    .result-label {
+        font-size: 0.85rem;
+    }
+
+    .result-value {
+        font-size: 1rem;
+    }
+}
+
+/* タブレット横向き */
+@media (max-width: 1024px) and (orientation: landscape) {
+    .calc-type-selector {
+        grid-template-columns: repeat(4, 1fr);
+    }
+
+    .calc-card {
+        padding: 1.5rem;
+    }
+}

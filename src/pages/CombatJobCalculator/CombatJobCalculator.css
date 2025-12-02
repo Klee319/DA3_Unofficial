@@ -1,0 +1,436 @@
+/* 戦闘職レベル計算機 - シンプルなダークテーマ */
+.combat-job-calculator {
+    min-height: 100vh;
+    background: linear-gradient(180deg, #1a1a1a 0%, #2a2a2a 100%);
+    padding: 2rem 1rem;
+    font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+}
+
+.calculator-container {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+/* メインタイトル */
+.main-title {
+    font-size: 2.5rem;
+    font-weight: 700;
+    text-align: center;
+    margin-bottom: 3rem;
+    color: #ffffff;
+    letter-spacing: -0.02em;
+}
+
+/* タブナビゲーション */
+.tab-navigation {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 2rem;
+    background: rgba(255, 255, 255, 0.03);
+    border-radius: 12px;
+    padding: 4px;
+    backdrop-filter: blur(10px);
+}
+
+.tab-button {
+    flex: 1;
+    max-width: 200px;
+    padding: 0.75rem 1.5rem;
+    font-size: 1rem;
+    font-weight: 600;
+    color: rgba(255, 255, 255, 0.6);
+    background: transparent;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    letter-spacing: -0.01em;
+}
+
+.tab-button:hover {
+    color: rgba(255, 255, 255, 0.9);
+}
+
+.tab-button.active {
+    color: #fff;
+    background: #2563eb;
+    box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
+}
+
+/* 入力カード */
+.input-card {
+    background: #1e1e1e;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 20px;
+    padding: 2rem;
+    margin-bottom: 2rem;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+}
+
+/* フォームグループ */
+.form-group {
+    margin-bottom: 1.5rem;
+}
+
+.form-group label {
+    display: block;
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: rgba(255, 255, 255, 0.7);
+    margin-bottom: 0.5rem;
+    letter-spacing: 0.01em;
+    text-transform: uppercase;
+}
+
+.form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+}
+
+/* フォーム要素 */
+.form-select,
+.form-input {
+    width: 100%;
+    padding: 0.875rem 1rem;
+    font-size: 1rem;
+    font-weight: 500;
+    color: #fff;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: 16px;
+    outline: none;
+    transition: all 0.3s ease;
+    cursor: pointer;
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+}
+
+.form-select:hover,
+.form-input:hover {
+    background: rgba(255, 255, 255, 0.05);
+    border-color: rgba(255, 255, 255, 0.08);
+}
+
+.form-select:focus,
+.form-input:focus {
+    background: rgba(255, 255, 255, 0.06);
+    border-color: rgba(37, 99, 235, 0.3);
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+}
+
+.form-input::placeholder {
+    color: rgba(255, 255, 255, 0.3);
+}
+
+.form-select option {
+    background-color: #2a2a2a !important;
+    background: #2a2a2a !important;
+    color: #ffffff !important;
+    padding: 0.75rem 1rem !important;
+    font-weight: 500 !important;
+    font-size: 1rem !important;
+}
+
+.form-select option:hover {
+    background-color: #3b82f6 !important;
+    background: #3b82f6 !important;
+}
+
+.form-select option:checked {
+    background-color: #2563eb !important;
+    background: linear-gradient(90deg, #2563eb 0%, #3b82f6 100%) !important;
+}
+
+/* チェックボックス */
+.checkbox-group {
+    margin-bottom: 1.5rem;
+}
+
+.checkbox-label {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    user-select: none;
+}
+
+.form-checkbox {
+    width: 20px;
+    height: 20px;
+    margin-right: 0.75rem;
+    accent-color: #2563eb;
+    cursor: pointer;
+}
+
+.checkbox-text {
+    font-size: 0.95rem;
+    font-weight: 500;
+    color: rgba(255, 255, 255, 0.85);
+}
+
+/* タブ別オプション */
+.tab-options {
+    margin-top: 1.5rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+/* 計算ボタン */
+.calculate-button {
+    width: 100%;
+    padding: 1rem;
+    margin-top: 2rem;
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: #fff;
+    background: #2563eb;
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
+}
+
+.calculate-button:hover {
+    background: #1d4ed8;
+    box-shadow: 0 6px 20px rgba(37, 99, 235, 0.3);
+}
+
+.calculate-button:active {
+    transform: translateY(1px);
+}
+
+/* 結果表示エリア */
+.results-container {
+    animation: fadeIn 0.5s ease;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.result-header {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.result-header h2 {
+    font-size: 1.8rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+    color: #fff;
+}
+
+.exp-needed {
+    font-size: 1.1rem;
+    color: rgba(255, 255, 255, 0.7);
+}
+
+.exp-needed strong {
+    color: #2563eb;
+    font-size: 1.4rem;
+    font-weight: 700;
+}
+
+/* モブグリッド（討伐系） */
+.mob-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 1.5rem;
+}
+
+.mob-card {
+    background: #1e1e1e;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 16px;
+    padding: 1.5rem;
+    transition: all 0.3s ease;
+}
+
+.mob-card:hover {
+    transform: translateY(-2px);
+    background: #252525;
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.3);
+}
+
+.mob-name {
+    font-size: 1.2rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+    color: #ffffff;
+}
+
+.mob-details {
+    space-y: 0.5rem;
+}
+
+.detail-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.5rem 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.detail-row:last-child {
+    border-bottom: none;
+}
+
+.detail-label {
+    font-size: 0.9rem;
+    color: rgba(255, 255, 255, 0.6);
+    font-weight: 500;
+}
+
+.detail-value {
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: #fff;
+}
+
+.detail-row.efficiency .detail-value {
+    color: #60a5fa;
+    font-size: 0.85rem;
+}
+
+/* 納品グリッド */
+.delivery-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 1.5rem;
+}
+
+.delivery-card {
+    background: #1e1e1e;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 16px;
+    padding: 1.5rem;
+    transition: all 0.3s ease;
+}
+
+.delivery-card:hover {
+    transform: translateY(-2px);
+    background: #252525;
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.3);
+}
+
+.delivery-card.special {
+    background: #1e1e1e;
+    border-color: rgba(255, 255, 255, 0.1);
+}
+
+.delivery-card.custom {
+    background: #1e1e1e;
+    border-color: rgba(37, 99, 235, 0.2);
+}
+
+.delivery-name {
+    font-size: 1.1rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+    color: #fff;
+}
+
+.delivery-card.special .delivery-name {
+    color: #ffffff;
+}
+
+.delivery-card.custom .delivery-name {
+    color: #60a5fa;
+}
+
+.delivery-details {
+    space-y: 0.5rem;
+}
+
+.detail-row.gold .detail-value {
+    color: #fbbf24;
+    font-weight: 700;
+}
+
+/* レスポンシブデザイン */
+@media (max-width: 768px) {
+    .main-title {
+        font-size: 2rem;
+    }
+
+    .form-row {
+        grid-template-columns: 1fr;
+    }
+
+    .mob-grid,
+    .delivery-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .input-card {
+        padding: 1.5rem;
+    }
+
+    .tab-button {
+        font-size: 0.9rem;
+        padding: 0.6rem 1rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .main-title {
+        font-size: 1.6rem;
+        margin-bottom: 2rem;
+    }
+
+    .calculator-container {
+        padding: 0;
+    }
+
+    .input-card {
+        padding: 1.25rem;
+        border-radius: 16px;
+    }
+
+    .calculate-button {
+        font-size: 1rem;
+        padding: 0.875rem;
+    }
+}
+
+
+
+/* スクロールバーカスタマイズ */
+.combat-job-calculator::-webkit-scrollbar {
+    width: 8px;
+}
+
+.combat-job-calculator::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.02);
+}
+
+.combat-job-calculator::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 4px;
+}
+
+.combat-job-calculator::-webkit-scrollbar-thumb:hover {
+    background: rgba(255, 255, 255, 0.15);
+}
+
+/* サンドスコーピオンのフォントサイズ調整（PC版のみ） */
+@media (min-width: 769px) {
+    .mob-card .mob-name {
+        font-size: 1.2rem;
+    }
+    
+    /* サンドスコーピオンだけ小さく */
+    .mob-grid .mob-card:nth-child(8) .mob-name {
+        font-size: 1rem;
+    }
+}

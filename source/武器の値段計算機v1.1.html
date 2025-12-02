@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>武器のクオリティ別価格計算</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 20px;
+            background-color: #f4f4f4;
+            text-align: center;
+        }
+
+        h2 {
+            color: #333;
+        }
+
+        .container {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            display: inline-block;
+        }
+
+        label {
+            font-size: 18px;
+            margin: 10px;
+        }
+
+        select {
+            font-size: 20px;
+            padding: 10px;
+            width: 180px;
+        }
+
+        input {
+            font-size: 20px;
+            padding: 10px;
+            width: 180px;
+        }
+
+        table {
+            border-collapse: collapse;
+            width: 80%;
+            margin: 20px auto;
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        th, td {
+            border: 1px solid #ddd;
+            padding: 10px;
+            text-align: center;
+        }
+
+        th {
+            background-color: #007bff;
+            color: white;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+
+        /* クオリティ別の色 */
+        .quality-SSS { color: red; font-weight: bold; }
+        .quality-SS { color: yellow; font-weight: bold; }
+        .quality-S { color: skyblue; font-weight: bold; }
+        .quality-A { color: orange; font-weight: bold; }
+        .quality-B { color: purple; font-weight: bold; }
+    </style>
+</head>
+<body>
+
+    <h2>武器のクオリティ別価格計算</h2>
+    <div class="container">
+        <label for="quality">基準クオリティを選択:</label>
+        <select id="quality">
+            <option value="SSS">SSS</option>
+            <option value="SS">SS</option>
+            <option value="S">S</option>
+            <option value="A">A</option>
+            <option value="B">B</option>
+            <option value="C">C</option>
+            <option value="D">D</option>
+            <option value="E">E</option>
+            <option value="F">F</option>
+        </select>
+
+        <label for="price">価格を入力:</label>
+        <input type="number" id="price" min="0" step="1" oninput="calculatePrices()">
+    </div>
+
+    <table>
+        <thead>
+            <tr>
+                <th>クオリティ</th>
+                <th>価格</th>
+            </tr>
+        </thead>
+        <tbody id="priceTable"></tbody>
+    </table>
+
+    <script>
+        function formatPrice(price) {
+            if (price >= 1000000) {
+                let man = Math.floor(price / 10000);
+                let sen = Math.round((price % 10000) / 1000);
+                return `${man}万${sen}千`;
+            } else if (price >= 10000) {
+                let man = Math.floor(price / 10000);
+                let remainder = Math.round(price % 10000);
+                return `${man}万${remainder.toString().padStart(4, '0')}`;
+            }
+            return price;
+        }
+
+        function calculatePrices() {
+            let baseQuality = document.getElementById("quality").value;
+            let basePrice = parseFloat(document.getElementById("price").value);
+
+            if (isNaN(basePrice) || basePrice <= 0) {
+                document.getElementById("priceTable").innerHTML = "";
+                return;
+            }
+
+            let qualities = ["SSS", "SS", "S", "A", "B", "C", "D", "E", "F"];
+            let baseIndex = qualities.indexOf(baseQuality);
+            let priceTable = document.getElementById("priceTable");
+            priceTable.innerHTML = "";
+
+            for (let i = 0; i < qualities.length; i++) {
+                let diff = i - baseIndex;
+                let calculatedPrice = basePrice / Math.pow(2, diff);
+                let qualityClass = `quality-${qualities[i]}`;
+
+                let row = `<tr>
+                    <td class="${qualityClass}">${qualities[i]}</td>
+                    <td>${formatPrice(Math.floor(calculatedPrice))}</td>
+                </tr>`;
+
+                priceTable.innerHTML += row;
+            }
+        }
+
+        document.getElementById("quality").addEventListener("change", calculatePrices);
+    </script>
+
+</body>
+</html>

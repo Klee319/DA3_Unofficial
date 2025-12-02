@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>経験値計算ツール</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            background: white;
+            width: 80%;
+            max-width: 400px;
+            margin: 50px auto;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        h2 {
+            color: #333;
+            font-weight: bold;
+        }
+
+        label {
+            font-weight: bold;
+        }
+
+        input, select, button {
+            width: 85%;
+            padding: 10px;
+            margin: 5px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 16px;
+            text-align: center;
+            font-weight: bold;
+        }
+
+        button {
+            background-color: #007bff;
+            color: white;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        .result {
+            margin-top: 20px;
+            font-size: 18px;
+            background: #fff3cd;
+            padding: 10px;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+            font-weight: bold;
+        }
+
+        .emoji {
+            font-size: 20px;
+        }
+    </style>
+    <script>
+        function updateForm() {
+            let option = document.getElementById("calculationType").value;
+            document.getElementById("magicStoneForm").style.display = option === "magicStone" ? "block" : "none";
+            document.getElementById("jobLevelForm").style.display = option === "jobLevel" ? "block" : "none";
+            document.getElementById("sandstoneForm").style.display = option === "sandstone" ? "block" : "none";
+        }
+
+        function calculateMagicStone() {
+            let a = parseInt(document.getElementById("currentLevel").value);
+            let b = parseInt(document.getElementById("targetLevel").value);
+            let c = parseFloat(document.getElementById("successRate").value);
+            let d = parseInt(document.getElementById("stoneLevel").value);
+
+            if (isNaN(a) || isNaN(b) || isNaN(c) || isNaN(d) || a >= b) {
+                alert("⚠️ 正しい数値を入力してください！");
+                return;
+            }
+
+            let experienceNeeded = 25 * ((a + (b - 1)) / 2) * (((b - 1) - a) + 1) + 1;
+            experienceNeeded *= (c / 100);
+            let stoneCount = Math.ceil(experienceNeeded / d);
+            let stoneC = (stoneCount / 1728).toFixed(2);
+            let stoneST = (stoneCount / 64).toFixed(2);
+
+            document.getElementById("magicStoneResult").innerHTML = `
+                🔮 必要経験値量: <strong>${experienceNeeded.toFixed(2)}</strong><br>
+                🪨 必要魔法石数: <strong>${stoneCount}</strong><br>
+                📦 魔法石(C): <strong>${stoneC}</strong><br>
+                💠 魔法石(ST): <strong>${stoneST}</strong>
+            `;
+        }
+
+    function calculateJobLevel() {
+    let jobType = document.getElementById("jobType").value;
+    let x1 = parseInt(document.getElementById("currentJobLevel").value);
+    let x2 = parseInt(document.getElementById("targetJobLevel").value);
+    let specifiedXP = parseInt(document.getElementById("specifiedXP").value);
+
+    if (isNaN(x1) || isNaN(x2) || x1 >= x2) {
+        alert("⚠️ 正しい数値を入力してください！");
+        return;
+    }
+
+    let formula;
+    switch (jobType) {
+        case "special":
+            formula = (x) => x ** 2 + 4 * x + 1;
+            break;
+        case "first":
+            formula = (x) => 2 * x ** 2 + 12 * x + 58;
+            break;
+        case "second":
+            formula = (x) => 4 * x ** 2 + 64 * x + 2644;
+            break;
+        case "third":
+            formula = (x) => 4 * x ** 2 + 116 * x + 4576;
+            break;
+        default:
+            return;
+    }
+
+    let experienceNeeded = 0;
+    let sandstoneTotal = 0;
+    let guardianTotal = 0;
+    let specifiedXPTotal = 0; // 指定XPでの納品回数
+
+    for (let i = x1; i < x2; i++) {
+        let y = formula(i);
+        experienceNeeded += y;
+        sandstoneTotal += Math.ceil(y / 1030);
+        guardianTotal += Math.ceil(y / 2075);
+
+        if (!isNaN(specifiedXP) && specifiedXP > 0) {
+            specifiedXPTotal += Math.ceil(y / specifiedXP); // 各yを指定XPで割って切り上げ
+        }
+    }
+
+    let requiredSandstone = sandstoneTotal * 30;
+
+    document.getElementById("jobLevelResult").innerHTML = `
+        📈 必要経験値量: <strong>${experienceNeeded}</strong><br>
+        ⛏ 砂岩納品回数: <strong>${sandstoneTotal}</strong><br>
+        🪨 必要な砂岩の数: <strong>${requiredSandstone}</strong><br>
+        🏰 番人回数: <strong>${guardianTotal}</strong><br>
+        ${specifiedXPTotal > 0 ? `📊 指定XP回数: <strong>${specifiedXPTotal}</strong>` : ""}
+    `;
+}
+
+
+
+
+        function calculateSandstone() {
+            let sandstoneCount = parseInt(document.getElementById("sandstoneCount").value);
+
+            if (isNaN(sandstoneCount) || sandstoneCount <= 0) {
+                alert("⚠️ 正しい数値を入力してください！");
+                return;
+            }
+
+            while (sandstoneCount % 30 !== 0) {
+                sandstoneCount--;
+            }
+
+            let magicStoneLv2 = Math.floor((sandstoneCount / 3) * 2);
+            let magicStoneLv3 = Math.floor((sandstoneCount / 9) * 4);
+
+            document.getElementById("sandstoneResult").innerHTML = `
+                🟩 魔法石Lv2: <strong>${magicStoneLv2}</strong><br>
+                🟦 魔法石Lv3: <strong>${magicStoneLv3}</strong>
+            `;
+        }
+    </script>
+</head>
+<body onload="updateForm()">
+
+    <div class="container">
+        <h2>経験値計算ツール</h2>
+        <label for="calculationType">🛠 計算の種類を選択:</label>
+        <select id="calculationType" onchange="updateForm()">
+            <option value="magicStone">🔮 魔法石の強化</option>
+            <option value="jobLevel">📈 職業レベルの経験値</option>
+            <option value="sandstone">⛏ 砂岩→魔法石変換</option>
+        </select>
+
+        <div id="magicStoneForm">
+            <h3>🔮 魔法石の強化</h3>
+            <input type="number" id="currentLevel" placeholder="現在のレベル">
+            <input type="number" id="targetLevel" placeholder="目標のレベル">
+            <input type="number" id="successRate" placeholder="成功率(%)">
+            <input type="number" id="stoneLevel" placeholder="魔法石のレベル">
+            <button onclick="calculateMagicStone()">計算する</button>
+            <div id="magicStoneResult" class="result"></div>
+        </div>
+
+        <div id="jobLevelForm">
+            <h3>📈 職業レベルの経験値</h3>
+            <select id="jobType">
+                <option value="special">🔹 特殊職</option>
+                <option value="first">🔹 一次職</option>
+                <option value="second">🔹 二次職</option>
+                <option value="third">🔹 三次職</option>
+            </select>
+            <input type="number" id="currentJobLevel" placeholder="現在のレベル">
+            <input type="number" id="targetJobLevel" placeholder="目標のレベル">
+            <input type="number" id="specifiedXP" placeholder="指定XP (任意)">
+
+            <button onclick="calculateJobLevel()">計算する</button>
+            <div id="jobLevelResult" class="result"></div>
+        </div>
+
+        <div id="sandstoneForm">
+            <h3>⛏ 砂岩→魔法石変換</h3>
+            <input type="number" id="sandstoneCount" placeholder="砂岩の数">
+            <button onclick="calculateSandstone()">計算する</button>
+            <div id="sandstoneResult" class="result"></div>
+        </div>
+    </div>
+
+</body>
+</html>
