@@ -38,17 +38,16 @@ function Home() {
                         <Link to="/production" className="card-link">使ってみる →</Link>
                     </div>
 
-                    <div className="card card-external">
-                        <div className="external-badge">外部サイト</div>
+                    <div className="card">
                         <h3>📊 DAビルド計算機</h3>
                         <p>役職とSP振り分けを設定し、実際にDAの装備を装着した際の火力やステータスの計算ができます。</p>
                         <a
                             href={config.externalLinks.buildCalculator}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="card-link card-link-external"
+                            className="card-link"
                         >
-                            外部サイトへ →
+                            使ってみる ↗
                         </a>
                     </div>
                 </div>
