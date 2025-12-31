@@ -74,46 +74,80 @@ function GameItemCalculator() {
         let exp = 0;
         let gold = 0;
         let deliveryUnit = 30; // デフォルトの納品単位
+        let effortEvidenceLevel = 0;
+        let effortEvidenceCount = 0;
+        let magicStoneLevel = 0;
+        let magicStoneCount = 0;
 
         switch (deliveryItemType) {
             case 'sandstone':
                 // 砂岩納品30個(経験値870,ゴールド1060)
+                // エフォート・エビデンスLv2×2, 魔法石Lv2×20
                 const sandstoneDeliveries = Math.floor(count / 30);
                 exp = sandstoneDeliveries * 870;
                 gold = sandstoneDeliveries * 1060;
+                effortEvidenceLevel = 2;
+                effortEvidenceCount = sandstoneDeliveries * 2;
+                magicStoneLevel = 2;
+                magicStoneCount = sandstoneDeliveries * 20;
                 break;
             case 'sandyLeather':
                 // 砂まみれの革納品30個(経験値1290,ゴールド1360)
+                // エフォート・エビデンスLv3×2, 魔法石Lv3×12
                 const leatherDeliveries = Math.floor(count / 30);
                 exp = leatherDeliveries * 1290;
                 gold = leatherDeliveries * 1360;
+                effortEvidenceLevel = 3;
+                effortEvidenceCount = leatherDeliveries * 2;
+                magicStoneLevel = 3;
+                magicStoneCount = leatherDeliveries * 12;
                 break;
             case 'poisonNeedle':
                 // 毒針納品30個(経験値1470,ゴールド1480)
+                // エフォート・エビデンスLv3×2, 魔法石Lv3×12
                 const needleDeliveries = Math.floor(count / 30);
                 exp = needleDeliveries * 1470;
                 gold = needleDeliveries * 1480;
+                effortEvidenceLevel = 3;
+                effortEvidenceCount = needleDeliveries * 2;
+                magicStoneLevel = 3;
+                magicStoneCount = needleDeliveries * 12;
                 break;
             case 'totem':
                 // トーテム納品25個(経験値2220,ゴールド2780)
+                // エフォート・エビデンスLv4×2, 魔法石Lv3×18
                 deliveryUnit = 25;
                 const totemDeliveries = Math.floor(count / 25);
                 exp = totemDeliveries * 2220;
                 gold = totemDeliveries * 2780;
+                effortEvidenceLevel = 4;
+                effortEvidenceCount = totemDeliveries * 2;
+                magicStoneLevel = 3;
+                magicStoneCount = totemDeliveries * 18;
                 break;
             case 'shadowFragment':
                 // 影の欠片納品5個(経験値4290,ゴールド4560)
+                // エフォート・エビデンスLv2×10, 魔法石Lv2×64
                 deliveryUnit = 5;
                 const shadowDeliveries = Math.floor(count / 5);
                 exp = shadowDeliveries * 4290;
                 gold = shadowDeliveries * 4560;
+                effortEvidenceLevel = 2;
+                effortEvidenceCount = shadowDeliveries * 10;
+                magicStoneLevel = 2;
+                magicStoneCount = shadowDeliveries * 64;
                 break;
             case 'waterBottle':
                 // 水の入った瓶納品32個(経験値3870,ゴールド3200)
+                // エフォート・エビデンスLv4×2, 魔法石Lv3×18
                 deliveryUnit = 32;
                 const waterDeliveries = Math.floor(count / 32);
                 exp = waterDeliveries * 3870;
                 gold = waterDeliveries * 3200;
+                effortEvidenceLevel = 4;
+                effortEvidenceCount = waterDeliveries * 2;
+                magicStoneLevel = 3;
+                magicStoneCount = waterDeliveries * 18;
                 break;
             default:
                 break;
@@ -136,6 +170,18 @@ function GameItemCalculator() {
                     <span className="result-label">獲得ゴールド:</span>
                     <span className="result-value">{gold.toLocaleString()} gold</span>
                 </div>
+                {effortEvidenceCount > 0 && (
+                    <div className="result-item">
+                        <span className="result-label">エフォート・エビデンス Lv{effortEvidenceLevel}:</span>
+                        <span className="result-value">{effortEvidenceCount.toLocaleString()} 個</span>
+                    </div>
+                )}
+                {magicStoneCount > 0 && (
+                    <div className="result-item">
+                        <span className="result-label">魔法石 Lv{magicStoneLevel}:</span>
+                        <span className="result-value">{magicStoneCount.toLocaleString()} 個</span>
+                    </div>
+                )}
                 {remaining > 0 && (
                     <div className="result-item warning">
                         <span className="result-label">余り:</span>
